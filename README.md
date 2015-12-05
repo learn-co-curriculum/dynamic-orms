@@ -38,13 +38,13 @@ end
 
 Here, we create our `songs` table, so-named because we are mapping this table to an existing class, `Song`. The column names for the table are taken from the known `attr_accessor`s of the `Song` class. 
 
-This is one way to map our program to our database, but it has some limitations. For one thing, our `#create_table` method is dependent on our knowing exactly what to name our table and columns. So, every class in our program would require us to re-write this `#create_table` method, swapping out different table and column names each time. This is repetitive. As you know, we programmers are lazy and we hate to repeat ourselves. Any smelly, repetitious code, begs the question: can we abstract this into a re-usable method? In this case––can we extract our class-specific `#create_table` method into one that is flexible and abstract and be used across any class. 
+This is one way to map our program to our database, but it has some limitations. For one thing, our `#create_table` method is dependent on our knowing exactly what to name our table and columns. So, every class in our program would require us to re-write this `#create_table` method, swapping out different table and column names each time. This is repetitive. As you know, we programmers are lazy and we hate to repeat ourselves. Any smelly, repetitious code, begs the question: can we abstract this into a re-usable method? In this case––can we extract our class-specific `#create_table` method into one that is flexible and abstract and can be used across any class?
 
 Well, with a dynamic ORM, we can abstract all of our conventional ORM methods into just such flexible, abstract and share-able methods. 
 
 ## What is a Dynamic ORM?
 
-A dynamic ORM is allows us to map an existing database table to a class and write methods can can use nothing more than information regarding a specific database table to:
+A dynamic ORM allows us to map an existing database table to a class and write methods that use nothing more than information regarding a specific database table to:
 
 * Create `attr_accessors` for a Ruby class. 
 * Create shareable methods for inserting, updating, selecting and delete data from the database table. 
@@ -97,7 +97,7 @@ It will return something that looks like this:
 
 This will be helpful to us as we use information requested from our database table to build attributes and methods on our `Song` class, but more on that later. 
 
-Okay, now that we see how our database and table has been set up, let's more on to metaprogramming our `Song` class using information from our database. 
+Okay, now that we see how our database and table has been set up, let's move on to metaprogramming our `Song` class using information from our database. 
 
 ## Step 2: Building `attr_accessor`s from column names
 
@@ -280,7 +280,7 @@ Let's take this one step at a time.
 
 #### Abstracting the Table Name
 
-Luckily for us, we already have a way method to give us the table name associated to any give class: `<class name>.table_name`. 
+Luckily for us, we already have a method to give us the table name associated to any give class: `<class name>.table_name`. 
 
 Recall, however, that the conventional `#save` is an *instance* method. So, inside a `#save` method, `self` will refer to the instance of the class, not the class itself. In order to use a class method inside an instance method, we need to do the following:
 
@@ -406,7 +406,7 @@ The above code, however, will result in a `values` array
 We need comma separated values for our SQL statement. Let's join this array into a string:
 
 ```ruby
-values.join(", "
+values.join(", ")
 ```
 
 Let's wrap up this code in a handy method, **`#values_for_insert`:**
@@ -453,5 +453,3 @@ This method is dynamic and abstract because it does not reference the table name
 Remember, dynamic ORMs are hard. Spend some time reading over the code in `lib/student.rb` and playing with the code in `bin/run`. Practice creating, saving and querying songs in the `bin/run` file and run the program again and again until you get a better feel for it. 
 
 Now that we have all of these great dynamic, abstract methods that connect a class to a database table, we'll move on to extracting into a parent class that any other class can inherit from. 
-
-<a href='https://learn.co/lessons/dynamic-orms-readme' data-visibility='hidden'>View this lesson on Learn.co</a>
