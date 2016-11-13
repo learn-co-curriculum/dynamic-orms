@@ -92,7 +92,7 @@ So, instead of `DB[:conn].execute("SELECT * FROM songs LIMIT 1")` returning some
 [[1, "Hello", "25"]]
 ```
 
-It will return something that looks like this:
+...it will return something that looks like this:
 
 ```ruby
 {"id"=>1, "name"=>"Hello", "album"=>"25", 0 => 1, 1 => "Hello", 2 => "25"}
